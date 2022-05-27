@@ -10,20 +10,6 @@ export default function Register(){
     const [disable, setDisable]=useState(false)
     const navigate = useNavigate()
 
-    function submitData(event){
-        event.preventDefault();
-    }
-
-    function postError(){
-        setDisable(false)
-        setRegisterInfo({email:'', password:'', name:'', image:''})
-        alert("Email já cadastrado!")
-    }
-
-    function postSuccess(){
-        navigate("/")
-    }
-
     function postInfo(){
         const validateEmail = /\S+@\S+\.\S+/
         const validateImage = new RegExp('^(https?:\\/\\/)?' +
@@ -55,6 +41,21 @@ export default function Register(){
             promise.catch(postError)
             promise.then(postSuccess)
         }
+    }
+
+    function postError(){
+        setDisable(false)
+        setRegisterInfo({email:'', password:'', name:'', image:''})
+        alert("Email já cadastrado!")
+    }
+
+    function postSuccess(){
+        navigate("/")
+    }
+    
+    function submitData(event){
+        event.preventDefault();
+        postInfo()
     }
 
     return (
@@ -97,7 +98,7 @@ export default function Register(){
             placeholder="foto"
             disabled = {disable}/>
 
-            <button type="submit" onClick={()=>postInfo()} disabled = {disable}>{disable?<ThreeDots color="#FFFFFF" width={52} height={14}/>:"Cadastrar"}</button>
+            <button type="submit" disabled = {disable}>{disable?<ThreeDots color="#FFFFFF" width={52} height={14}/>:"Cadastrar"}</button>
         </form>
         <Link to="/"><span>Já tem uma conta? Faça login!</span></Link>
     </Main>)

@@ -9,30 +9,9 @@ import UserContext from "../context/UserContext";
 export default function Login(){
     const [loginInfo,setLoginInfo]=useState({email:'', password:''})
     const [disable, setDisable]=useState(false)
-    const { userInfo, setUserInfo } = useContext(UserContext)
+    const { setUserInfo } = useContext(UserContext)
     const navigate = useNavigate()
-
-    function submitData(event){
-        event.preventDefault();
-    }
-
-    function postError(){
-        setDisable(false)
-        setLoginInfo({email:'', password:''})
-        alert("Email ou senha invalidos!")
-    }
-
-    function postSuccess(response){
-        setUserInfo(response.data)
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${userInfo.token}`
-            }
-        }
-        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
-        promise.then(response => navigate("/hoje", {replace:true, state: response }))
-
-    }
+    
 
     function postInfo(){
         const validateEmail = /\S+@\S+\.\S+/
@@ -51,6 +30,29 @@ export default function Login(){
             promise.catch(postError)
             promise.then(postSuccess)
         }
+    }
+
+    function postError(){
+        setDisable(false)
+        setLoginInfo({email:'', password:''})
+        alert("Email ou senha invalidos!")
+    }
+
+    function postSuccess(response){
+        setUserInfo(response.data)
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${response.data.token}`
+            }
+        }
+        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
+        promise.then(response => navigate("/hoje", {replace:true, state: response.data }))
+
+    }
+
+    function submitData(event){
+        event.preventDefault();
+        postInfo()
     }
     
     return (
@@ -75,7 +77,7 @@ export default function Login(){
             placeholder="senha"
             disabled = {disable}/>
 
-            <button type="submit" onClick={()=>postInfo()} disabled = {disable}>{disable?<ThreeDots color="#FFFFFF" width={52} height={14}/>:"Cadastrar"}</button>
+            <button type="submit" disabled = {disable}>{disable?<ThreeDots color="#FFFFFF" width={52} height={14}/>:"Entrar"}</button>
         </form>
         <Link to="/cadastro"><span>Não tem uma conta? Cadastre-se!</span></Link>
     </Main>)
