@@ -11,7 +11,7 @@ export default function History(){
         <Header imgURL={userInfo.image}/>
         <h2>Histórico</h2>
         <TextBox>Em breve você poderá ver o histórico dos seus hábitos aqui!</TextBox>
-        <Footer value = {33}/>
+        <Footer dayHabits={userInfo.dayHabits}/>
     </Main>)
 }
 

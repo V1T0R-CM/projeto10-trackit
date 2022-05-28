@@ -3,13 +3,29 @@ import "react-circular-progressbar/dist/styles.css";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export default function Footer({value}){
+export default function Footer({dayHabits}){
+    
+    function progress(){
+        let complete=0
+        for(let habit of dayHabits){
+            if(habit.done){
+                complete++
+            }
+        }
+        if(dayHabits.length>0){
+            return (complete/dayHabits.length)*100
+        }
+        else{
+            return 0
+        }
+    }
+    
     return(
         <Main>
             <FrameProgress>
                 <Link to="/hoje">
                     <CircularProgressbar
-                        value={value}
+                        value={progress()}
                         text={"Hoje"}
                         background
                         backgroundPadding={6}

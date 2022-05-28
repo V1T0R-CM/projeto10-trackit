@@ -92,7 +92,6 @@ function CreateHabit({setInCreate, setUserHabits, userHabits, userInfo}){
 
     function postSuccess(response){
         setUserHabits([...userHabits, response.data])
-        setDisable(false)
         setInCreate(false)
     }
 
@@ -136,7 +135,7 @@ function CreateHabit({setInCreate, setUserHabits, userHabits, userInfo}){
 
         <WeekdayList disable={disable} setHabitDays={setHabitDays} habitDays={habitDays}/>
         <CreationOptions>
-            <span onClick={()=>setInCreate(false)}>Cancelar</span>
+            <span onClick={()=>disable ? null:setInCreate(false)}>Cancelar</span>
             <button type="submit" disabled = {disable}>{disable?<ThreeDots color="#FFFFFF" width={52} height={14}/>:"Salvar"}</button>
         </CreationOptions>
     </CreationBox>)
@@ -179,7 +178,7 @@ export default function Habits(){
             <HabitsList>
                 {habitsRender()}
             </HabitsList>
-        <Footer value={66}/>
+        <Footer dayHabits={userInfo.dayHabits}/>
     </Main>)
 }
 
