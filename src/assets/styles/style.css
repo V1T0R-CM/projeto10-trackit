@@ -8,3 +8,15 @@ body{
     font-family: "Lexend Deca";
 }
 
+input{
+    font-weight: 400;
+    font-size: 20px;
+    font-family: "Lexend Deca";
+    color: #666666;
+}
+
+input::placeholder{
+    font-weight: 400;
+    font-size: 20px;
+    color: #DBDBDB;
+}

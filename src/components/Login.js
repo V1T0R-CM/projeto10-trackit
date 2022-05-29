@@ -113,12 +113,6 @@ const Main = styled.div`
         padding: 11px;
     }
 
-    input::placeholder{
-        font-weight: 400;
-        font-size: 20px;
-        color: #DBDBDB;
-    }
-
     button{
         background-color: #52B6FF;
         border-radius: 5px;

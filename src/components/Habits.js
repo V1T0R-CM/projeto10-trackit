@@ -6,7 +6,7 @@ import Header from "./Header"
 import Footer from "./Footer";
 import styled from "styled-components";
 
-function Habit({id, name, days, userInfo, userHabits, setUserHabits}){
+function Habit({id, name, days, userInfo, userHabits, setUserHabits, attTodayHabits}){
     function render(){
         const renderList=[]
         const week=["D","S","T","Q","Q","S","S"]
@@ -23,6 +23,7 @@ function Habit({id, name, days, userInfo, userHabits, setUserHabits}){
     
     function deleteSuccess(){
         setUserHabits(userHabits.filter(item => item.id !== id))
+        attTodayHabits()
     }
     function deleteHabit(){
         const config = {
@@ -85,13 +86,14 @@ function WeekdayList({disable, setHabitDays, habitDays}){
     )
 }
 
-function CreateHabit({setInCreate, setUserHabits, userHabits, userInfo}){
+function CreateHabit({setInCreate, setUserHabits, userHabits, userInfo, attTodayHabits}){
     const [habitName, setHabitName] = useState("")
     const [habitDays, setHabitDays]= useState([])
     const [disable, setDisable]= useState(false)
 
     function postSuccess(response){
         setUserHabits([...userHabits, response.data])
+        attTodayHabits()
         setInCreate(false)
     }
 
@@ -142,7 +144,7 @@ function CreateHabit({setInCreate, setUserHabits, userHabits, userInfo}){
 }
 
 export default function Habits(){
-    const { userInfo } = useContext(UserContext)
+    const { userInfo, attTodayHabits} = useContext(UserContext)
     const [userHabits, setUserHabits] = useState([])
     const [inCreate, setInCreate] = useState(false)
 
@@ -162,7 +164,7 @@ export default function Habits(){
         }
         else{
             return(
-                userHabits.map(item => <Habit key={item.id} id={item.id} name={item.name} days={item.days} userHabits={userHabits} setUserHabits={setUserHabits} userInfo={userInfo}/>)
+                userHabits.map(item => <Habit key={item.id} id={item.id} name={item.name} days={item.days} userHabits={userHabits} setUserHabits={setUserHabits} userInfo={userInfo} attTodayHabits={attTodayHabits}/>)
             )
         }
     }
@@ -174,7 +176,7 @@ export default function Habits(){
                 Meus hábitos
                 <button onClick={()=>setInCreate(true)}><ion-icon name="add-outline"></ion-icon></button>
             </TitleBar>
-            {inCreate? <CreateHabit setInCreate={setInCreate} setUserHabits={setUserHabits} userHabits={userHabits} userInfo={userInfo}/>:""}
+            {inCreate? <CreateHabit setInCreate={setInCreate} setUserHabits={setUserHabits} userHabits={userHabits} userInfo={userInfo} attTodayHabits={attTodayHabits}/>:""}
             <HabitsList>
                 {habitsRender()}
             </HabitsList>
@@ -271,12 +273,6 @@ const CreationBox = styled.form`
         border-radius: 5px;
         margin-bottom: 8px;
         padding: 10px;
-    }
-
-    input::placeholder{
-        font-weight: 400;
-        font-size: 20px;
-        color:  #dbdbdb;
     }
 `
 
