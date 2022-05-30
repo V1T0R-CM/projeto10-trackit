@@ -38,7 +38,7 @@ function Habit({id, name, days, userInfo, userHabits, setUserHabits, attTodayHab
     return(
         <HabitBox>
             <HabitTitle>
-                {name}
+                <span>{name}</span>
                 <Trash onClick={()=>deleteHabit()}><ion-icon name="trash-outline"></ion-icon></Trash>
             </HabitTitle>
             <DaysList>
@@ -250,6 +250,11 @@ const HabitTitle = styled.div`
     font-weight: 400;
     font-size: 20px;
     color: #666666;
+
+    span{
+        width: 80%;
+        word-break: break-word;
+    }
 `
 const Trash = styled.div`
     font-size: 15px;

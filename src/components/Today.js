@@ -55,8 +55,8 @@ function HabitMarkBox({userInfo, infoHabit, attTodayHabits}){
         <Task>
             <div>
                 <h1>{infoHabit.name}</h1>
-                <HabitBoxInfo color={marked?"#8FC549":"#666666"}>Sequência atual: <span>{`${infoHabit.currentSequence} dias`}</span></HabitBoxInfo>
-                <HabitBoxInfo color={changeColor()}>Seu recorde: <span>{`${infoHabit.highestSequence} dias`}</span></HabitBoxInfo>
+                <HabitBoxInfo color={marked?"#8FC549":"#666666"}>Sequência atual: <span>{infoHabit.currentSequence>1?`${infoHabit.currentSequence} dias`:`${infoHabit.currentSequence} dia`}</span></HabitBoxInfo>
+                <HabitBoxInfo color={changeColor()}>Seu recorde: <span>{infoHabit.highestSequence>1?`${infoHabit.highestSequence} dias`:`${infoHabit.highestSequence} dia`}</span></HabitBoxInfo>
             </div>
             <TaskMark color={marked?"#8FC549":"#EBEBEB"} onClick={()=>habitCheckMark()}><img src={checkmark}/></TaskMark>
         </Task>
@@ -88,10 +88,15 @@ export default function Today(){
                 complete++
             }
         }
-        if(userInfo.dayHabits.length>0){
+        if(complete>0){
             return (<SubTitle color="#8FC549">{`${Math.round((complete/userInfo.dayHabits.length)*100)}% dos hábitos concluídos`}</SubTitle>)
         }
-        return (<SubTitle color="#BABABA">Nenhum hábito concluído ainda</SubTitle>)
+        else if(userInfo.dayHabits.length>0){
+            return (<SubTitle color="#BABABA">Nenhum hábito concluído ainda</SubTitle>)
+        }
+        else{
+            return (<SubTitle color="#BABABA">Você não tem nenhum hábito definido para hoje</SubTitle>)
+        }
     }
 
     return(
