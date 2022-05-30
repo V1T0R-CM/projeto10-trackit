@@ -130,7 +130,7 @@ const TaskList = styled.div`
 
 const Task = styled.div`
     width:100%;
-    height:94px;
+    min-height:94px;
     margin-top: 10px;
     background-color: #FFFFFF;    
     border-radius: 5px;
@@ -143,6 +143,11 @@ const Task = styled.div`
         font-weight: 400;
         font-size: 20px;
         margin-bottom: 6px;
+        word-break: break-word;
+    }
+
+    div{
+        width:70%;
     }
 `
 

@@ -233,7 +233,7 @@ const HabitBox = styled.div`
     background-color: #ffffff;
     border-radius: 5px;
     margin-bottom: 10px;
-    height: 90px;
+    min-height: 90px;
     width: 100%;
     padding: 15px;
 
@@ -308,6 +308,7 @@ const DaysList = styled.div`
     display: flex;
     justify-content: space-between;
     width: 80%;
+    margin-top: 5px;
 `
 
 const WeekdayBox = styled.div`
